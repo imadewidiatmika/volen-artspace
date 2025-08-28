@@ -1,0 +1,317 @@
+:root {
+    --tblr-font-sans-serif: "Inter";
+}
+body {
+    font-feature-settings: "liga" 0;
+    background-color: #2c2c2c; /* Warna background utama */
+    color: #fff;
+    font-family: sans-serif;
+}
+.page {
+    background-color: #2c2c2c;
+}
+
+.navbar-vertical {
+    background-color: #1a1a1a; /* Warna sidebar */
+    color: #fff;
+}
+.navbar-brand {
+    padding: 1rem;
+    color: #fff;
+}
+.navbar-brand-autodark {
+    background-color: #1a1a1a;
+}
+.navbar-vertical .navbar-nav .nav-item .nav-link:hover,
+.navbar-vertical .navbar-nav .nav-item.active .nav-link {
+    background-color: #2c2c2c; /* Warna background saat hover/active di sidebar */
+    color: #ffc107; /* Warna highlight kuning */
+}
+.page-wrapper {
+    background-color: #fff;
+}
+.card {
+    background-color: #222222; /* Warna background card */
+    border: 1px solid #f9fafb; /* Border card */
+}
+.form-control {
+    background-color: #f9fafb !important;
+    border-color: #f9fafb !important;
+    font-family: sans-serif;
+}
+.input-icon-addon {
+    background-color: #444;
+    border-color: #555;
+    color: #fff;
+}
+.btn-add {
+    border: none;
+    color: #fff;
+    font-family: sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 1rem 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(100, 100, 100, 0.3);
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-primary {
+    font-family: sans-serif;
+    font-weight: bold;
+}
+.btn-primary:hover {
+    background-color: ##3385ff; /* Warna tombol kuning */
+}
+.table {
+    color: #fff;
+}
+.table th {
+    color: #ccc;
+    background-color: #222222;
+}
+.table td {
+    border-top: 1px solid #444;
+}
+.table-vcenter tr:hover {
+    background-color: #3a3a3a; /* Warna saat hover di baris tabel */
+}
+.badge.bg-green-lt {
+    background-color: rgba(30, 150, 100, 0.2) !important;
+    color: #00ff84 !important;
+}
+a.text-primary,
+a.text-primary:hover {
+    color: #ffc107 !important; /* Teks link di tabel */
+}
+a.text-secondary {
+    color: #fff !important; /* Teks link Edit/Delete */
+}
+a.text-danger {
+    color: #fff !important;
+}
+.pagination .page-item a.page-link {
+    color: #000;
+}
+.pagination .page-item.active .page-link {
+    background-color: #ffc107; /* Warna pagination active */
+    border-color: #ffc107;
+    color: #000;
+}
+.pagination .page-item:hover .page-link {
+    background-color: #444;
+}
+.navbar-brand-autodark {
+    background: transparent !important;
+}
+.badge.bg-green-lt {
+    background-color: rgba(139, 219, 13, 0.2) !important;
+    color: #8bdb0d !important;
+}
+.nav-item.active .dropdown-menu .dropdown-item.active {
+    color: #ffc107 !important;
+    background-color: #1a1a1a !important;
+}
+.dropdown-menu {
+    background-color: #1a1a1a;
+    border-color: #444;
+}
+.dropdown-item {
+    color: #fff;
+}
+.dropdown-item:hover {
+    background-color: #2c2c2c;
+}
+.icon {
+    color: #fff;
+}
+.page-header .btn-list span {
+    color: #fff;
+}
+.navbar-vertical .h5 {
+    color: #fff;
+}
+
+/* Perbaikan Badge dan layout menu */
+.nav-link-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.nav-link-title .badge {
+    margin-left: auto;
+}
+.nav-link .nav-link-icon {
+    flex-shrink: 0;
+}
+
+/* Card styling */
+.card {
+    background-color: #ffffff !important;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    padding: 0;
+}
+
+/* ✅ TABLE FLAT STYLE seperti screenshot terakhir */
+.flat-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* HEADER */
+.flat-table thead th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    color: #6c7a91;
+    text-transform: uppercase;
+    font-size: 12px;
+    padding: 14px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* BODY */
+.flat-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.flat-table tbody tr:hover {
+    background-color: #f3f4f6;
+}
+
+.flat-table td {
+    padding: 14px;
+    font-size: 14px;
+    color: #374151;
+    border-top: 1px solid #e5e7eb;
+}
+
+/* Pagination styling */
+.card-footer {
+    background-color: #ffffff !important;
+    border-top: none;
+}
+
+.pagination .page-link {
+    border-radius: 8px;
+    margin: 0 3px;
+    border: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* 🔍 Ganti warna icon search (dan ikon lain dalam .input-icon-addon) */
+.input-icon-addon {
+    background-color: #000 !important; /* latar belakang biru */
+    color: #fff !important; /* ikon putih */
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 6px;
+}
+.input-icon-addon .icon {
+    stroke: #fff !important; /* pastikan ikon SVG putih */
+}
+.btn,
+.card-body,
+.form-select {
+    font-family: sans-serif;
+}
+
+/* Tambahan transisi biar sidebar dropdown smooth */
+.menu-transition {
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    opacity: 0;
+    max-height: 0;
+}
+
+.menu-transition.show {
+    opacity: 1;
+    max-height: 500px; /* cukup besar untuk isi menu */
+}
+
+/* --- THE ULTIMATE FIX: Menyamakan semua input di Modal --- */
+.theme-dark .modal input.form-control[type="text"],
+.theme-dark .modal input.form-control[type="date"],
+.theme-dark .modal input.form-control[type="time"],
+.theme-dark .modal input.form-control[type="password"],
+.theme-dark .modal input.form-control[type="number"],
+.theme-dark .modal textarea.form-control,
+.theme-dark .modal select.form-select {
+    background-color: #ffffff !important; /* Paksa background jadi putih */
+    color: #1a1a1a !important; /* Paksa warna teks jadi gelap */
+    border-color: #dcdcdc !important; /* Beri border abu-abu terang */
+}
+
+/* Atur warna placeholder agar sesuai */
+.theme-dark .modal .form-control::placeholder {
+    color: #8b959e !important;
+}
+
+/* Atur style tambahan untuk input tertentu */
+.theme-dark .modal .form-control[type="number"],
+.theme-dark .modal .form-select,
+.theme-dark .modal .form-control[type="date"],
+.theme-dark .modal .form-control[type="time"] {
+    color-scheme: light;
+}
+/* --- FIX Tampilan untuk Kolom Pencarian & Input Umum --- */
+.theme-dark .page-header .form-control {
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+    border-color: #dcdcdc !important;
+}
+
+.theme-dark .page-header .form-control::placeholder {
+    color: #8b959e !important;
+}
+
+/* --- FIX UNTUK WARNA BIRU SAAT BROWSER AUTOFILL --- */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    /* Trik untuk memaksa background tetap putih dengan shadow internal */
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    box-shadow: 0 0 0px 1000px #ffffff inset !important;
+
+    /* Paksa warna teks tulisan menjadi gelap */
+    -webkit-text-fill-color: #1a1a1a !important;
+
+    /* Trik transisi untuk mencegah browser menimpa warna background */
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.section-title {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-top: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+}
+.gray-header {
+    background-color: #dee2e6;
+    font-weight: 600;
+}
+.validated {
+    color: green;
+    font-weight: bold;
+}
+.card-body-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}

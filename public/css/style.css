@@ -1,0 +1,491 @@
+/* Define the custom font 'Prisma' */
+@font-face {
+    font-family: "Prisma";
+    src: url("fonts/Prisma.ttf") format("truetype"); /* <<< PENTING: SESUAIKAN PATH INI */
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Define the custom font 'Microsoft Yi Baiti' */
+@font-face {
+    font-family: "Microsoft Yi Baiti";
+    src: url("fonts/Microsoft Yi Baiti.ttf") format("truetype"); /* <<< PENTING: SESUAIKAN PATH INI */
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background-color: #f8f9fa; /* Light grey background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: sans-serif; /* Fallback font for general text */
+}
+
+/* --- Global Container and Content Styles --- */
+.container-custom,
+.content-wrapper {
+    /* Combined styles for similar container elements */
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+/* --- Header Styles (Generic and Specific) --- */
+/* Common styles for Prisma font titles */
+.header-title,
+.volen-artspace-title {
+    font-family: "Prisma", sans-serif;
+    font-weight: normal;
+    color: #333;
+}
+
+.header-title {
+    /* Specific for header title in forms/success pages */
+    font-size: 3em;
+    letter-spacing: 5px;
+    margin-bottom: 5px;
+    line-height: 0.8; /* Specific line-height for this title */
+}
+
+.volen-artspace-title {
+    /* Specific for the main landing page title */
+    font-size: 4rem;
+    line-height: 1; /* Adjust to control vertical spacing */
+    letter-spacing: 5px; /* Added letter spacing to match the screenshot */
+    margin-bottom: 0; /* Ensures no extra margin from Bootstrap's h1 */
+}
+
+/* Common styles for Microsoft Yi Baiti font subtitles */
+.header-subtitle,
+.registration-system-text {
+    font-family: "Microsoft Yi Baiti", sans-serif;
+    color: #555;
+}
+
+.header-subtitle {
+    /* Specific for header subtitle in forms/success pages */
+    font-size: 1.2em;
+    margin-bottom: 40px;
+}
+
+.registration-system-text {
+    /* Specific for the main landing page subtitle */
+    font-size: 1.5rem;
+    letter-spacing: 0.1em;
+    margin-top: 0.5rem; /* Adjusted slightly from -0.5rem to align visually with screenshot and Bootstrap's P margin */
+    margin-bottom: 2.5rem; /* Add some space below subtitle before buttons */
+}
+
+/* --- Success Message Styles --- */
+.success-icon-container {
+    font-size: 3.5rem;
+    color: #28a745;
+    margin-bottom: 1rem;
+}
+
+.success-text {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #28a745;
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+}
+
+.success-message {
+    font-size: 1.1em;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    max-width: 450px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Form Styles --- */
+.form-label-custom {
+    font-size: 1.1em;
+    font-weight: normal;
+    color: #333;
+    text-align: left;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-select,
+.form-control {
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 1em;
+}
+
+/* Custom style for date input placeholder */
+.form-control[type="date"]::before {
+    content: attr(data-placeholder);
+    width: 100%;
+    color: #6c757d;
+}
+
+.form-control[type="date"]:valid::before,
+.form-control[type="date"]:focus::before {
+    content: "";
+    width: 0;
+}
+
+.form-control.is-invalid {
+    border-color: #dc3545;
+}
+
+.invalid-feedback {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: #dc3545;
+    text-align: left;
+}
+
+.form-control.is-invalid ~ .invalid-feedback {
+    display: block;
+}
+
+.required-text {
+    font-size: 0.9em;
+    color: #dc3545;
+    text-align: left;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+/* --- Button Styles (Generic and Specific) --- */
+.btn-container {
+    /* For groups of buttons like back/next */
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.btn-back,
+.btn-next,
+.custom-btn-attendance, /* Include new buttons here for common properties */
+.custom-btn-dashboard {
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-size: 1.2em;
+    font-weight: bold; /* Added for all main buttons */
+    transition: all 0.3s ease;
+    /* Removed flex properties here as they are applied to specific groups */
+}
+
+/* Specific styles for Back/Next buttons */
+.btn-back,
+.btn-next {
+    flex: 1; /* Re-apply flex for these specific buttons */
+    max-width: 150px;
+    color: #ffffff;
+}
+
+.btn-back {
+    background: linear-gradient(to right, #9c27b0, #e040fb);
+}
+
+.btn-back:hover {
+    opacity: 0.9;
+}
+
+.btn-next {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+.btn-next:hover {
+    background-color: #495057;
+}
+
+/* Specific styles for Attendance/Dashboard buttons */
+.custom-btn-attendance,
+.custom-btn-dashboard {
+    flex-grow: 0;
+    flex-shrink: 0;
+    min-width: 150px;
+}
+
+.custom-btn-attendance {
+    background-color: #007bff; /* Bootstrap primary blue */
+    border-color: #007bff;
+    color: #fff;
+}
+
+.custom-btn-attendance:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.custom-btn-dashboard {
+    background-color: #343a40; /* Bootstrap dark grey */
+    border-color: #343a40;
+    color: #fff;
+}
+
+.custom-btn-dashboard:hover {
+    background-color: #1d2124;
+    border-color: #1d2124;
+}
+
+/* --- Miscellaneous Styles --- */
+.location-text {
+    font-size: 1.1em;
+    color: #333;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.bank-transfer-upload-area {
+    border: 2px dashed #ccc;
+    border-radius: 0.25rem;
+    padding: 3rem 1.5rem;
+    background-color: #fefefe;
+    cursor: pointer;
+    color: #888;
+}
+
+.bank-transfer-upload-area .plus-icon-container {
+    color: #888;
+}
+
+.bank-transfer-upload-area p {
+    font-size: 0.9rem;
+}
+
+.copy-account-btn {
+    background-color: #333;
+    border-color: #333;
+    color: #fff;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.25rem;
+    font-size: 1.1rem;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.copy-account-btn:hover {
+    background-color: #555;
+    border-color: #555;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    /* For main landing page title/subtitle */
+    .volen-artspace-title {
+        font-size: 3rem; /* Adjusted for smaller screens */
+        letter-spacing: 3px;
+    }
+    .registration-system-text {
+        font-size: 1.2rem; /* Adjusted for smaller screens */
+        letter-spacing: 0.08em;
+    }
+
+    /* For general header/content */
+    .bank-transfer-upload-area {
+        padding: 2rem 1rem;
+    }
+    .header-title {
+        font-size: 3rem;
+    }
+    .header-subtitle {
+        font-size: 1.3rem;
+    }
+    .success-icon-container {
+        font-size: 3rem;
+    }
+    .success-text {
+        font-size: 1.8rem;
+    }
+    .success-message {
+        font-size: 1em;
+    }
+    .content-wrapper,
+    .container-custom {
+        /* Apply padding adjustment to both */
+        padding: 30px;
+    }
+    /* Button adjustments for general usage */
+    .custom-btn-attendance,
+    .custom-btn-dashboard {
+        font-size: 1.1rem;
+        padding: 10px 20px;
+        min-width: 120px;
+    }
+}
+
+@media (max-width: 576px) {
+    /* For main landing page title/subtitle */
+    .volen-artspace-title {
+        font-size: 2.2rem;
+        letter-spacing: 2px;
+    }
+    .registration-system-text {
+        font-size: 1rem;
+        letter-spacing: 0.05em;
+    }
+    /* For general header/content */
+    .card {
+        padding: 1.5rem;
+    }
+    .header-title {
+        font-size: 2.5rem;
+        letter-spacing: 0.15em;
+    }
+    .header-subtitle {
+        font-size: 1.1rem;
+        letter-spacing: 0.05em;
+        margin-bottom: 2rem;
+    }
+    .success-icon-container {
+        font-size: 2.5rem;
+    }
+    .success-text {
+        font-size: 1.5rem;
+    }
+    .success-message {
+        font-size: 0.9em;
+    }
+    .content-wrapper,
+    .container-custom {
+        /* Apply padding adjustment to both */
+        padding: 20px;
+    }
+    /* Button adjustments for all buttons on smallest screens */
+    .btn-next,
+    .btn-back,
+    .custom-btn-attendance,
+    .custom-btn-dashboard {
+        padding: 10px 30px;
+        font-size: 1.1em;
+        min-width: unset; /* Remove min-width when stacked */
+        width: 80%; /* Make buttons take more width */
+        margin: 0 auto; /* Center buttons */
+    }
+
+    /* Adjust button container for stacked layout on small screens */
+    .d-flex {
+        flex-direction: column; /* Stack buttons vertically on small screens */
+        gap: 15px !important; /* Adjust gap when stacked */
+    }
+}
+
+.qr-scanner-placeholder {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 80px; /* Adjust as needed to represent the scan area size */
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 300px; /* Approximate width from the image */
+    height: 300px; /* Approximate height from the image */
+
+    /* --- PERUBAHAN DI SINI --- */
+    display: block; /* Pastikan elemen berperilaku seperti blok */
+    margin-left: auto; /* Margin kiri otomatis */
+    margin-right: auto; /* Margin kanan otomatis */
+    /* --- AKHIR PERUBAHAN --- */
+
+    display: flex; /* (opsional, jika ingin konten di dalamnya tetap di tengah vertikal/horizontal) */
+    justify-content: center; /* Untuk menengahkan konten di dalamnya */
+    align-items: center; /* Untuk menengahkan konten di dalamnya */
+    color: #6c757d; /* Placeholder text color */
+    font-size: 1.2em;
+}
+
+/* ... CSS lainnya ... */
+
+.btn-purple {
+    background-color: #9c27b0; /* Approximate purple color */
+    border-color: #9c27b0;
+    color: #ffffff;
+}
+
+.btn-purple:hover {
+    background-color: #7b1fa2;
+    border-color: #7b1fa2;
+}
+
+/* --- Participant Details Styles --- */
+.participant-details-wrapper {
+    text-align: left; /* Align text to the left within this wrapper */
+    max-width: 350px; /* Control the maximum width of the text block */
+    margin: 0 auto 40px auto; /* Center the wrapper and add bottom margin */
+    line-height: 1.8; /* Increase line height for better readability */
+}
+
+.participant-detail-text {
+    font-family: sans-serif; /* Or specify 'Microsoft Yi Baiti' if desired for content text */
+    font-size: 1.15em;
+    color: #333; /* Darker text color for details */
+    margin-bottom: 0.5rem; /* Small margin between lines */
+}
+
+.participant-detail-text:last-child {
+    margin-bottom: 0; /* Remove bottom margin from the last line of details */
+}
+
+/* --- Responsive Adjustments for new elements --- */
+@media (max-width: 768px) {
+    .participant-details-wrapper {
+        font-size: 1.05em;
+        max-width: 90%; /* Adjust max-width for smaller screens */
+        margin-bottom: 30px;
+    }
+    .btn-set-attendance {
+        padding: 12px 30px;
+        font-size: 1.2em;
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .participant-details-wrapper {
+        font-size: 1em;
+        max-width: 95%; /* Further adjust max-width for very small screens */
+        margin-bottom: 25px;
+    }
+    .btn-set-attendance {
+        padding: 10px 25px;
+        font-size: 1.1em;
+        width: 80%; /* Make button take more width on small screens */
+        max-width: unset; /* Remove max-width constraint when stacking */
+    }
+}
+
+/* --- NEW / ADJUSTED: Error Message Styles (for exact matching) --- */
+.error-icon {
+    font-size: 2.3em; /* Ukuran ikon yang disesuaikan menjadi lebih besar */
+    color: #c00000; /* Warna merah yang disesuaikan agar lebih terang */
+    margin-right: 0.25rem;
+}
+
+.error-title {
+    font-size: 1.6em; /* Ukuran teks "ATTENDANCE ERROR" yang disesuaikan agar lebih besar */
+    font-weight: bold; /* Untuk membuatnya tebal */
+    color: #c00000; /* Warna merah yang disesuaikan agar lebih terang */
+    letter-spacing: 0.05em;
+    margin-left: 0.25rem;
+}
