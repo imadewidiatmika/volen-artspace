@@ -11,7 +11,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Conditionable;
-use Illuminate\Support\Traits\InteractsWithData;
 use Illuminate\Support\Traits\Macroable;
 use IteratorAggregate;
 use JsonSerializable;
@@ -20,7 +19,7 @@ use Traversable;
 
 class ComponentAttributeBag implements Arrayable, ArrayAccess, IteratorAggregate, JsonSerializable, Htmlable, Stringable
 {
-    use Conditionable, InteractsWithData, Macroable;
+    use Conditionable, Macroable;
 
     /**
      * The raw array of attributes.
@@ -42,16 +41,11 @@ class ComponentAttributeBag implements Arrayable, ArrayAccess, IteratorAggregate
     /**
      * Get all the attribute values.
      *
-     * @param  array|mixed|null  $keys
      * @return array
      */
-    public function all($keys = null)
+    public function all()
     {
-        if (is_null($keys)) {
-            return $this->attributes;
-        }
-
-        return $this->only($keys)->toArray();
+        return $this->attributes;
     }
 
     /**
@@ -78,19 +72,56 @@ class ComponentAttributeBag implements Arrayable, ArrayAccess, IteratorAggregate
     }
 
     /**
-     * Retrieve data from the instance.
+     * Determine if a given attribute exists in the attribute array.
      *
-     * @param  string|null  $key
-     * @param  mixed  $default
-     * @return mixed
+     * @param  array|string  $key
+     * @return bool
      */
-    protected function data($key = null, $default = null)
+    public function has($key)
     {
-        if (is_null($key)) {
-            return $this->attributes;
+        $keys = is_array($key) ? $key : func_get_args();
+
+        foreach ($keys as $value) {
+            if (! array_key_exists($value, $this->attributes)) {
+                return false;
+            }
         }
 
-        return $this->get($key, $default);
+        return true;
+    }
+
+    /**
+     * Determine if any of the keys exist in the attribute array.
+     *
+     * @param  array|string  $key
+     * @return bool
+     */
+    public function hasAny($key)
+    {
+        if (! count($this->attributes)) {
+            return false;
+        }
+
+        $keys = is_array($key) ? $key : func_get_args();
+
+        foreach ($keys as $value) {
+            if ($this->has($value)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Determine if a given attribute is missing from the attribute array.
+     *
+     * @param  string  $key
+     * @return bool
+     */
+    public function missing($key)
+    {
+        return ! $this->has($key);
     }
 
     /**

@@ -1,3 +1,4 @@
+<!-- ✅ SIDEBAR TETAP -->
 <aside class="navbar navbar-vertical navbar-expand-lg">
   <div class="container-fluid">
     <div class="navbar-brand">
@@ -16,12 +17,13 @@
     <div class="collapse navbar-collapse" id="sidebar-menu">
       <ul class="navbar-nav pt-lg-3">
 
-        <li class="nav-item dropdown {{ request()->routeIs('admin.administrators.*', 'admin.activities.*') ? 'active show' : '' }}">
-          <a class="nav-link dropdown-toggle" href="#navbar-users" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="{{ request()->routeIs('admin.administrators.*', 'admin.activities.*') ? 'true' : 'false' }}">
+        <!-- ✅ USERS & ACTIVITIES -->
+        <li class="nav-item dropdown {{ Request::is('activitiesDatabase', 'administration') ? 'active show' : '' }}">
+          <a class="nav-link dropdown-toggle" href="#navbar-users" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="{{ Request::is('activitiesDatabase', 'administration') ? 'true' : 'false' }}">
             <span class="nav-link-title">Users & Activities</span>
           </a>
-          <div class="dropdown-menu {{ request()->routeIs('admin.administrators.*', 'admin.activities.*') ? 'show' : '' }}">
-            <a class="dropdown-item {{ request()->routeIs('admin.administrators.*') ? 'active' : '' }}" href="{{ route('admin.administrators.index') }}">
+          <div class="dropdown-menu {{ Request::is('activitiesDatabase', 'administration') ? 'show' : '' }}">
+            <a class="dropdown-item {{ Request::is('administration') ? 'active' : '' }}" href="/administration">
               <span class="nav-link-icon d-md-none d-lg-inline-block">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -32,7 +34,7 @@
               </span>
               Administrator & Password
             </a>
-            <a class="dropdown-item {{ request()->routeIs('admin.activities.*') ? 'active' : '' }}" href="{{ route('admin.activities.index') }}">
+            <a class="dropdown-item {{ Request::is('activitiesDatabase') ? 'active' : '' }}" href="/activitiesDatabase">
               <span class="nav-link-icon d-md-none d-lg-inline-block">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-database" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -47,12 +49,13 @@
           </div>
         </li>
 
-        <li class="nav-item dropdown {{ request()->routeIs('admin.activity-schedules.*', 'admin.registration', 'admin.detailAttendance', 'admin.registrants') ? 'active show' : '' }}">
-          <a class="nav-link dropdown-toggle" href="#navbar-schedule" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="{{ request()->routeIs('admin.activity-schedules.*', 'admin.registration', 'admin.detailAttendance', 'admin.registrants') ? 'true' : 'false' }}">
+        <!-- ✅ SCHEDULE & REGISTRATION -->
+        <li class="nav-item dropdown {{ Request::is('activitySchedule', 'registration', 'detailAttendance', 'registrants') ? 'active show' : '' }}">
+          <a class="nav-link dropdown-toggle" href="#navbar-schedule" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="{{ Request::is('activitySchedule', 'registration', 'detailAttendance', 'registrants') ? 'true' : 'false' }}">
             <span class="nav-link-title">Schedule & Registration</span>
           </a>
-          <div class="dropdown-menu {{ request()->routeIs('admin.activity-schedules.*', 'admin.registration', 'admin.detailAttendance', 'admin.registrants') ? 'show' : '' }}">
-            <a class="dropdown-item {{ request()->routeIs('admin.activity-schedules.*') ? 'active' : '' }}" href="{{ route('admin.activity-schedules.index') }}">
+          <div class="dropdown-menu {{ Request::is('activitySchedule', 'registration', 'detailAttendance', 'registrants') ? 'show' : '' }}">
+            <a class="dropdown-item {{ Request::is('activitySchedule') ? 'active' : '' }}" href="/activitySchedule">
               <span class="nav-link-icon d-md-none d-lg-inline-block">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -64,7 +67,7 @@
               </span>
               Activity Scheduling
             </a>
-            <a class="dropdown-item {{ request()->routeIs('admin.registration') ? 'active' : '' }}" href="{{ route('admin.registration') }}">
+            <a class="dropdown-item {{ Request::is('registration') ? 'active' : '' }}" href="/registration">
               <span class="nav-link-icon d-md-none d-lg-inline-block">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -76,7 +79,7 @@
               </span>
               New Registration <span class="badge bg-green-lt ms-auto">NEW</span>
             </a>
-            <a class="dropdown-item {{ request()->routeIs('admin.registrants') ? 'active' : '' }}" href="{{ route('admin.registrants') }}">
+            <a class="dropdown-item {{ Request::is('registrants') ? 'active' : '' }}" href="/registrants">
               <span class="nav-link-icon d-md-none d-lg-inline-block">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -88,7 +91,7 @@
               </span>
               Registrants of Activities
             </a>
-            <a class="dropdown-item {{ request()->routeIs('admin.detailAttendance') ? 'active' : '' }}" href="{{ route('admin.detailAttendance') }}">
+            <a class="dropdown-item {{ Request::is('detailAttendance') ? 'active' : '' }}" href="/detailAttendance">
               <span class="nav-link-icon d-md-none d-lg-inline-block">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clipboard-list" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -103,12 +106,13 @@
           </div>
         </li>
 
-        <li class="nav-item dropdown {{ request()->routeIs('admin.participants') ? 'active show' : '' }}">
-          <a class="nav-link dropdown-toggle" href="#navbar-participants" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="{{ request()->routeIs('admin.participants') ? 'true' : 'false' }}">
+        <!-- ✅ PARTICIPANTS -->
+        <li class="nav-item dropdown {{ Request::is('participants') ? 'active show' : '' }}">
+          <a class="nav-link dropdown-toggle" href="#navbar-participants" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="{{ Request::is('participants') ? 'true' : 'false' }}">
             <span class="nav-link-title">Participants</span>
           </a>
-          <div class="dropdown-menu {{ request()->routeIs('admin.participants') ? 'show' : '' }}">
-            <a class="dropdown-item {{ request()->routeIs('admin.participants') ? 'active' : '' }}" href="{{ route('admin.participants') }}">
+          <div class="dropdown-menu {{ Request::is('participants') ? 'show' : '' }}">
+            <a class="dropdown-item {{ Request::is('participants') ? 'active' : '' }}" href="/participants">
               <span class="nav-link-icon d-md-none d-lg-inline-block">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-database" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -125,13 +129,14 @@
       </ul>
     </div>
 
-    <div class="mt-auto p-3 d-flex align-items-center">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-        <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .031 2.572 -1.065z"></path>
-        <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
-      </svg>
-      <a href="#" class="h5 m-0 ps-2 text-decoration-none">Log Out</a>
-    </div>
+    <!-- ✅ FOOTER LOGOUT -->
+ <div class="mt-auto p-3 d-flex align-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .031 2.572 -1.065z"></path>
+              <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+            </svg>
+            <a href="#" class="h5 m-0 ps-2 text-decoration-none">Log Out</a>
+          </div>
   </div>
 </aside>

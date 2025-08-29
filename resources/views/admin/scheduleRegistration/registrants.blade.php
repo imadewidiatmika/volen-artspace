@@ -7,7 +7,29 @@
     <title>Detail Attendance</title>
     <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler-vendors.min.css" rel="stylesheet"/>
-     <link rel="stylesheet" href="{{ asset('css/tabler.css') }}">
+    <link rel="stylesheet" href="css/tabler.css">
+    <style>
+      .section-title {
+        background-color: #f8f9fa;
+        font-weight: bold;
+        padding: 8px 16px;
+        border-top: 1px solid #dee2e6;
+        border-bottom: 1px solid #dee2e6;
+      }
+      .gray-header {
+        background-color: #dee2e6;
+        font-weight: 600;
+      }
+      .validated {
+        color: green;
+        font-weight: bold;
+      }
+      .card-body-title {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+    </style>
   </head>
 
   <body class="theme-dark">

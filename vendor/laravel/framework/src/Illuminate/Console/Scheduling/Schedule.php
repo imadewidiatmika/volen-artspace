@@ -18,7 +18,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\ProcessUtils;
 use Illuminate\Support\Traits\Macroable;
 use RuntimeException;
-use Symfony\Component\Console\Command\Command as SymfonyCommand;
 
 use function Illuminate\Support\enum_value;
 
@@ -150,22 +149,12 @@ class Schedule
     /**
      * Add a new Artisan command event to the schedule.
      *
-     * @param  \Symfony\Component\Console\Command\Command|string  $command
+     * @param  string  $command
      * @param  array  $parameters
      * @return \Illuminate\Console\Scheduling\Event
      */
     public function command($command, array $parameters = [])
     {
-        if ($command instanceof SymfonyCommand) {
-            $command = get_class($command);
-
-            $command = Container::getInstance()->make($command);
-
-            return $this->exec(
-                Application::formatCommandString($command->getName()), $parameters,
-            )->description($command->getDescription());
-        }
-
         if (class_exists($command)) {
             $command = Container::getInstance()->make($command);
 
@@ -312,7 +301,7 @@ class Schedule
             throw new RuntimeException('Invoke an attribute method such as Schedule::daily() before defining a schedule group.');
         }
 
-        $this->groupStack[] = clone $this->attributes;
+        $this->groupStack[] = $this->attributes;
 
         $events($this);
 

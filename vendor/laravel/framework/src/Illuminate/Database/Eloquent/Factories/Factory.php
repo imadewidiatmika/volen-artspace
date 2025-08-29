@@ -92,13 +92,6 @@ abstract class Factory
     protected $expandRelationships = true;
 
     /**
-     * The relationships that should not be automatically created.
-     *
-     * @var array
-     */
-    protected $excludeRelationships = [];
-
-    /**
      * The name of the database connection that will be used to create the models.
      *
      * @var string|null
@@ -159,7 +152,6 @@ abstract class Factory
      * @param  string|null  $connection
      * @param  \Illuminate\Support\Collection|null  $recycle
      * @param  bool|null  $expandRelationships
-     * @param  array  $excludeRelationships
      */
     public function __construct(
         $count = null,
@@ -170,8 +162,7 @@ abstract class Factory
         ?Collection $afterCreating = null,
         $connection = null,
         ?Collection $recycle = null,
-        ?bool $expandRelationships = null,
-        array $excludeRelationships = [],
+        ?bool $expandRelationships = null
     ) {
         $this->count = $count;
         $this->states = $states ?? new Collection;
@@ -183,7 +174,6 @@ abstract class Factory
         $this->recycle = $recycle ?? new Collection;
         $this->faker = $this->withFaker();
         $this->expandRelationships = $expandRelationships ?? self::$expandRelationshipsByDefault;
-        $this->excludeRelationships = $excludeRelationships;
     }
 
     /**
@@ -515,11 +505,8 @@ abstract class Factory
     protected function expandAttributes(array $definition)
     {
         return (new Collection($definition))
-            ->map($evaluateRelations = function ($attribute, $key) {
+            ->map($evaluateRelations = function ($attribute) {
                 if (! $this->expandRelationships && $attribute instanceof self) {
-                    $attribute = null;
-                } elseif ($attribute instanceof self &&
-                    array_intersect([$attribute->modelName(), $key], $this->excludeRelationships)) {
                     $attribute = null;
                 } elseif ($attribute instanceof self) {
                     $attribute = $this->getRandomRecycledModel($attribute->modelName())?->getKey()
@@ -535,7 +522,7 @@ abstract class Factory
                     $attribute = $attribute($definition);
                 }
 
-                $attribute = $evaluateRelations($attribute, $key);
+                $attribute = $evaluateRelations($attribute);
 
                 $definition[$key] = $attribute;
 
@@ -787,12 +774,11 @@ abstract class Factory
     /**
      * Indicate that related parent models should not be created.
      *
-     * @param  array<string|class-string<Model>>  $parents
      * @return static
      */
-    public function withoutParents($parents = [])
+    public function withoutParents()
     {
-        return $this->newInstance(! $parents ? ['expandRelationships' => false] : ['excludeRelationships' => $parents]);
+        return $this->newInstance(['expandRelationships' => false]);
     }
 
     /**
@@ -834,7 +820,6 @@ abstract class Factory
             'connection' => $this->connection,
             'recycle' => $this->recycle,
             'expandRelationships' => $this->expandRelationships,
-            'excludeRelationships' => $this->excludeRelationships,
         ], $arguments)));
     }
 

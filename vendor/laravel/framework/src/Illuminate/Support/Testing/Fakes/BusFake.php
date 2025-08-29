@@ -9,7 +9,6 @@ use Illuminate\Bus\PendingBatch;
 use Illuminate\Contracts\Bus\QueueingDispatcher;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ReflectsClosures;
 use PHPUnit\Framework\Assert as PHPUnit;
 use RuntimeException;
@@ -134,18 +133,6 @@ class BusFake implements Fake, QueueingDispatcher
     }
 
     /**
-     * Assert if a job was pushed exactly once.
-     *
-     * @param  string|\Closure  $command
-     * @param  int  $times
-     * @return void
-     */
-    public function assertDispatchedOnce($command)
-    {
-        $this->assertDispatchedTimes($command, 1);
-    }
-
-    /**
      * Assert if a job was pushed a number of times.
      *
      * @param  string|\Closure  $command
@@ -166,11 +153,7 @@ class BusFake implements Fake, QueueingDispatcher
 
         PHPUnit::assertSame(
             $times, $count,
-            sprintf(
-                "The expected [{$command}] job was pushed {$count} %s instead of {$times} %s.",
-                Str::plural('time', $count),
-                Str::plural('time', $times)
-            )
+            "The expected [{$command}] job was pushed {$count} times instead of {$times} times."
         );
     }
 
@@ -249,11 +232,7 @@ class BusFake implements Fake, QueueingDispatcher
 
         PHPUnit::assertSame(
             $times, $count,
-            sprintf(
-                "The expected [{$command}] job was synchronously pushed {$count} %s instead of {$times} %s.",
-                Str::plural('time', $count),
-                Str::plural('time', $times)
-            )
+            "The expected [{$command}] job was synchronously pushed {$count} times instead of {$times} times."
         );
     }
 
@@ -318,11 +297,7 @@ class BusFake implements Fake, QueueingDispatcher
 
         PHPUnit::assertSame(
             $times, $count,
-            sprintf(
-                "The expected [{$command}] job was pushed {$count} %s instead of {$times} %s.",
-                Str::plural('time', $count),
-                Str::plural('time', $times)
-            )
+            "The expected [{$command}] job was pushed {$count} times instead of {$times} times."
         );
     }
 

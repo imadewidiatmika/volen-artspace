@@ -263,9 +263,13 @@ class Arr
             return value($default);
         }
 
-        $key = array_find_key($array, $callback);
+        foreach ($array as $key => $value) {
+            if ($callback($value, $key)) {
+                return $value;
+            }
+        }
 
-        return $key !== null ? $array[$key] : value($default);
+        return value($default);
     }
 
     /**
@@ -546,30 +550,6 @@ class Arr
         }
 
         return false;
-    }
-
-    /**
-     * Determine if all items pass the given truth test.
-     *
-     * @param  iterable  $array
-     * @param  (callable(mixed, array-key): bool)  $callback
-     * @return bool
-     */
-    public static function every($array, callable $callback)
-    {
-        return array_all($array, $callback);
-    }
-
-    /**
-     * Determine if some items pass the given truth test.
-     *
-     * @param  iterable  $array
-     * @param  (callable(mixed, array-key): bool)  $callback
-     * @return bool
-     */
-    public static function some($array, callable $callback)
-    {
-        return array_any($array, $callback);
     }
 
     /**
@@ -959,23 +939,6 @@ class Arr
         $array[array_shift($keys)] = $value;
 
         return $array;
-    }
-
-    /**
-     * Push an item into an array using "dot" notation.
-     *
-     * @param  \ArrayAccess|array  $array
-     * @param  string|int|null  $key
-     * @param  mixed  $values
-     * @return array
-     */
-    public static function push(ArrayAccess|array &$array, string|int|null $key, mixed ...$values): array
-    {
-        $target = static::array($array, $key, []);
-
-        array_push($target, ...$values);
-
-        return static::set($array, $key, $target);
     }
 
     /**

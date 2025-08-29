@@ -6,14 +6,12 @@ use Closure;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Pipeline\Pipeline as PipelineContract;
 use Illuminate\Support\Traits\Conditionable;
-use Illuminate\Support\Traits\Macroable;
 use RuntimeException;
 use Throwable;
 
 class Pipeline implements PipelineContract
 {
     use Conditionable;
-    use Macroable;
 
     /**
      * The container implementation.
@@ -49,13 +47,6 @@ class Pipeline implements PipelineContract
      * @var \Closure|null
      */
     protected $finally;
-
-    /**
-     * Indicates whether to wrap the pipeline in a database transaction.
-     *
-     * @var string|null|\UnitEnum|false
-     */
-    protected $withinTransaction = false;
 
     /**
      * Create a new class instance.
@@ -132,9 +123,7 @@ class Pipeline implements PipelineContract
         );
 
         try {
-            return $this->withinTransaction !== false
-                ? $this->getContainer()->make('db')->connection($this->withinTransaction)->transaction(fn () => $pipeline($this->passable))
-                : $pipeline($this->passable);
+            return $pipeline($this->passable);
         } finally {
             if ($this->finally) {
                 ($this->finally)($this->passable);
@@ -254,19 +243,6 @@ class Pipeline implements PipelineContract
     protected function pipes()
     {
         return $this->pipes;
-    }
-
-    /**
-     * Execute each pipeline step within a database transaction.
-     *
-     * @param  string|null|\UnitEnum|false  $withinTransaction
-     * @return $this
-     */
-    public function withinTransaction($withinTransaction = null)
-    {
-        $this->withinTransaction = $withinTransaction;
-
-        return $this;
     }
 
     /**

@@ -7,7 +7,7 @@
     <title>Detail Attendance</title>
     <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler-vendors.min.css" rel="stylesheet"/>
-      <link rel="stylesheet" href="{{ asset('css/tabler.css') }}">
+    <link rel="stylesheet" href="css/tabler.css">
     <style>
       .section-title {
         background-color: #f8f9fa;
