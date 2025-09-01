@@ -44,8 +44,7 @@ body {
     border-color: #555;
     color: #fff;
 }
-.btn-primary {
-    background-color: #000;
+.btn-add {
     border: none;
     color: #fff;
     font-family: sans-serif;
@@ -59,9 +58,13 @@ body {
     box-shadow: 0 4px 12px rgba(100, 100, 100, 0.3);
     transition: all 0.2s ease-in-out;
 }
+
+.btn-primary {
+    font-family: sans-serif;
+    font-weight: bold;
+}
 .btn-primary:hover {
-    background-color: #000; /* Warna tombol kuning */
-    border-color: #000;
+    background-color: ##3385ff; /* Warna tombol kuning */
 }
 .table {
     color: #fff;
@@ -238,4 +241,77 @@ a.text-danger {
 .menu-transition.show {
     opacity: 1;
     max-height: 500px; /* cukup besar untuk isi menu */
+}
+
+/* --- THE ULTIMATE FIX: Menyamakan semua input di Modal --- */
+.theme-dark .modal input.form-control[type="text"],
+.theme-dark .modal input.form-control[type="date"],
+.theme-dark .modal input.form-control[type="time"],
+.theme-dark .modal input.form-control[type="password"],
+.theme-dark .modal input.form-control[type="number"],
+.theme-dark .modal textarea.form-control,
+.theme-dark .modal select.form-select {
+    background-color: #ffffff !important; /* Paksa background jadi putih */
+    color: #1a1a1a !important; /* Paksa warna teks jadi gelap */
+    border-color: #dcdcdc !important; /* Beri border abu-abu terang */
+}
+
+/* Atur warna placeholder agar sesuai */
+.theme-dark .modal .form-control::placeholder {
+    color: #8b959e !important;
+}
+
+/* Atur style tambahan untuk input tertentu */
+.theme-dark .modal .form-control[type="number"],
+.theme-dark .modal .form-select,
+.theme-dark .modal .form-control[type="date"],
+.theme-dark .modal .form-control[type="time"] {
+    color-scheme: light;
+}
+/* --- FIX Tampilan untuk Kolom Pencarian & Input Umum --- */
+.theme-dark .page-header .form-control {
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+    border-color: #dcdcdc !important;
+}
+
+.theme-dark .page-header .form-control::placeholder {
+    color: #8b959e !important;
+}
+
+/* --- FIX UNTUK WARNA BIRU SAAT BROWSER AUTOFILL --- */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    /* Trik untuk memaksa background tetap putih dengan shadow internal */
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    box-shadow: 0 0 0px 1000px #ffffff inset !important;
+
+    /* Paksa warna teks tulisan menjadi gelap */
+    -webkit-text-fill-color: #1a1a1a !important;
+
+    /* Trik transisi untuk mencegah browser menimpa warna background */
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.section-title {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-top: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+}
+.gray-header {
+    background-color: #dee2e6;
+    font-weight: 600;
+}
+.validated {
+    color: green;
+    font-weight: bold;
+}
+.card-body-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
 }

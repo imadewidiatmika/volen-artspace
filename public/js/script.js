@@ -1,225 +1,99 @@
 document.addEventListener("DOMContentLoaded", function () {
-    //
-    // --- STEP 2 LOGIC (Activity, Date, Time) ---
-    //
+    const registrationForm = document.getElementById("registrationForm");
+
+    // Pastikan kode hanya berjalan jika form registrasi ada di halaman ini
+    if (!registrationForm) {
+        return;
+    }
+
+    // Ambil elemen-elemen DOM
     const activitySelect = document.getElementById("activitySelect");
-    const dateInputWrapper = document.getElementById("dateInputWrapper");
-    const dateInput = document.getElementById("dateInput");
-    const timeInputWrapper = document.getElementById("timeInputWrapper");
-    const timeInput = document.getElementById("timeInput");
-    const step3Content = document.getElementById("step3Content");
+    const dateWrapper = document.getElementById("dateWrapper");
+    const dateSelect = document.getElementById("dateSelect");
+    const timeWrapper = document.getElementById("timeWrapper");
+    const timeSelect = document.getElementById("timeSelect");
+    const detailsWrapper = document.getElementById("detailsWrapper");
+    const locationText = document.querySelector("#locationText span");
+    const priceText = document.querySelector("#priceText span");
+    const nextButton = document.getElementById("nextButton");
+    const loader = document.getElementById("loader");
 
-    function toggleDateInputVisibility() {
-        if (activitySelect && activitySelect.value !== "") {
-            dateInputWrapper.classList.remove("hidden");
-        } else {
-            if (dateInputWrapper) dateInputWrapper.classList.add("hidden");
-            if (dateInput) dateInput.value = "";
-            if (timeInputWrapper) timeInputWrapper.classList.add("hidden");
-            if (timeInput) timeInput.value = "";
-        }
+    // Ambil URL dari data-attributes yang kita pasang di tag <form>
+    const getDatesUrl = registrationForm.dataset.getDatesUrl;
+    const getTimesUrl = registrationForm.dataset.getTimesUrl;
+    const nextStepBaseUrl = registrationForm.dataset.nextStepBaseUrl;
+
+    function resetAndHide(elements) {
+        elements.forEach((el) => el.classList.add("hidden"));
     }
 
-    function toggleTimeInputVisibility() {
-        if (dateInput && dateInput.value !== "") {
-            if (timeInputWrapper) timeInputWrapper.classList.remove("hidden");
-        } else {
-            if (timeInputWrapper) timeInputWrapper.classList.add("hidden");
-            if (timeInput) timeInput.value = "";
-        }
-    }
+    // 1. Saat Aktivitas dipilih
+    activitySelect.addEventListener("change", function () {
+        const activityId = this.value;
+        resetAndHide([dateWrapper, timeWrapper, detailsWrapper]);
+        dateSelect.innerHTML = "";
+        timeSelect.innerHTML = "";
 
-    function toggleStep3ContentVisibility() {
-        if (
-            activitySelect &&
-            dateInput &&
-            timeInput &&
-            activitySelect.value !== "" &&
-            dateInput.value !== "" &&
-            timeInput.value !== ""
-        ) {
-            if (step3Content) step3Content.classList.remove("hidden");
-        } else {
-            if (step3Content) step3Content.classList.add("hidden");
-        }
-    }
+        if (!activityId) return;
 
-    if (activitySelect) {
-        activitySelect.addEventListener("change", function () {
-            toggleDateInputVisibility();
-            toggleTimeInputVisibility();
-            toggleStep3ContentVisibility();
-        });
-    }
+        loader.classList.remove("hidden");
 
-    if (dateInput) {
-        dateInput.addEventListener("change", function () {
-            toggleTimeInputVisibility();
-            toggleStep3ContentVisibility();
-        });
-    }
-
-    if (timeInput) {
-        timeInput.addEventListener("change", toggleStep3ContentVisibility);
-    }
-
-    //
-    // --- COPY ACCOUNT BUTTON LOGIC ---
-    //
-    const copyAccountBtn = document.querySelector(".copy-account-btn");
-    if (copyAccountBtn) {
-        copyAccountBtn.addEventListener("click", function () {
-            const accountNumber = "6485277068";
-            navigator.clipboard
-                .writeText(accountNumber)
-                .then(() => {
-                    alert("Nomor rekening berhasil disalin: " + accountNumber);
-                })
-                .catch((err) => {
-                    console.error("Gagal menyalin nomor rekening: ", err);
+        fetch(`${getDatesUrl}?activity_id=${activityId}`)
+            .then((response) => response.json())
+            .then((data) => {
+                loader.classList.add("hidden");
+                dateSelect.innerHTML =
+                    '<option value="" selected disabled>Select Date</option>';
+                data.forEach((date) => {
+                    dateSelect.innerHTML += `<option value="${date.value}">${date.text}</option>`;
                 });
-        });
-    }
-
-    //
-    // --- SHOW EVIDENCE LOGIC ---
-    //
-    window.showEvidence = function (src) {
-        const img = document.getElementById("modalEvidenceImage");
-        const downloadBtn = document.getElementById("downloadEvidenceBtn");
-        if (img) img.src = src;
-        if (downloadBtn) downloadBtn.href = src;
-    };
-
-    //
-    // --- EDIT BUTTONS LOGIC ---
-    //
-    const editButtons = document.querySelectorAll(".btn-edit-activity");
-    editButtons.forEach(function (btn) {
-        btn.addEventListener("click", function () {
-            const row = btn.closest("tr");
-            const id = row.querySelector("td:nth-child(1)").textContent.trim();
-            const activity = row
-                .querySelector("td:nth-child(2)")
-                .textContent.trim();
-
-            document.getElementById("edit-activity-id").value = id;
-            document.getElementById("edit-activity-name").value = activity;
-        });
+                dateWrapper.classList.remove("hidden");
+            });
     });
 
-    //
-    // --- PARTICIPANT SEARCH LOGIC ---
-    //
-    const registrationForm = document.getElementById("registrationForm");
-    const participantNameInput = document.getElementById("participantName");
-    const nextButton = document.getElementById("nextButton");
-    const searchResultsDiv = document.getElementById("searchResults");
-    const loadingMessage = document.getElementById("loadingMessage");
-    const resultsList = document.getElementById("resultsList");
-    const noResultsMessage = document.getElementById("noResultsMessage");
-    const selectedParticipantDetails = document.getElementById(
-        "selectedParticipantDetails"
-    );
+    // 2. Saat Tanggal dipilih
+    dateSelect.addEventListener("change", function () {
+        const activityId = activitySelect.value;
+        const selectedDate = this.value;
+        resetAndHide([timeWrapper, detailsWrapper]);
+        timeSelect.innerHTML = "";
 
-    const dummyParticipantData = [
-        {
-            id: 1,
-            name: "Meyza Patricia",
-            activity: "Clay Painting",
-        },
-        {
-            id: 2,
-            name: "Meyza Kristina",
-            activity: "Pottery Class",
-        },
-        {
-            id: 3,
-            name: "Jessica Meyza",
-            activity: "Water Coloring",
-        },
-        {
-            id: 4,
-            name: "Budi Santoso",
-            activity: "Clay Painting",
-        },
-        {
-            id: 5,
-            name: "Dewi Melati",
-            activity: "Sculpture Workshop",
-        },
-    ];
+        if (!selectedDate) return;
 
-    if (registrationForm) {
-        registrationForm.addEventListener("submit", function (event) {
-            event.preventDefault();
+        loader.classList.remove("hidden");
 
-            const query = participantNameInput.value.toLowerCase().trim();
-
-            searchResultsDiv.classList.add("hidden");
-            selectedParticipantDetails.classList.add("hidden");
-
-            if (query.length > 0) {
-                loadingMessage.classList.remove("hidden");
-
-                setTimeout(() => {
-                    loadingMessage.classList.add("hidden");
-
-                    const filteredResults = dummyParticipantData.filter(
-                        (item) => item.name.toLowerCase().includes(query)
-                    );
-
-                    if (filteredResults.length > 0) {
-                        displayResults(filteredResults);
-                        searchResultsDiv.classList.remove("hidden");
-                    } else {
-                        noResultsMessage.classList.remove("hidden");
-                        searchResultsDiv.classList.remove("hidden");
-                    }
-                }, 300);
-            } else {
-                alert("Nama peserta tidak boleh kosong.");
-                resultsList.innerHTML = "";
-                noResultsMessage.classList.add("hidden");
-                searchResultsDiv.classList.add("hidden");
-            }
-        });
-    }
-
-    function displayResults(results) {
-        resultsList.innerHTML = "";
-        noResultsMessage.classList.add("hidden");
-
-        results.forEach((item) => {
-            const li = document.createElement("li");
-            li.className = "list-group-item list-group-item-action";
-            li.textContent = `${item.name} (${item.activity})`;
-            li.dataset.id = item.id;
-
-            // Logika baru: mengalihkan ke route '/' saat list diklik
-            li.addEventListener("click", function () {
-                window.location.href = "/finishScan";
+        fetch(`${getTimesUrl}?activity_id=${activityId}&date=${selectedDate}`)
+            .then((response) => response.json())
+            .then((data) => {
+                loader.classList.add("hidden");
+                timeSelect.innerHTML =
+                    '<option value="" selected disabled>Select Time</option>';
+                data.forEach((schedule) => {
+                    timeSelect.innerHTML += `<option value="${schedule.schedule_id}" data-location="${schedule.location}" data-price="${schedule.price}">${schedule.time_text}</option>`;
+                });
+                timeWrapper.classList.remove("hidden");
             });
+    });
 
-            resultsList.appendChild(li);
-        });
-    }
+    // 3. Saat Waktu dipilih
+    timeSelect.addEventListener("change", function () {
+        const selectedOption = this.options[this.selectedIndex];
+        const scheduleId = this.value;
 
-    function selectParticipant(participant) {
-        document.getElementById("selectedName").textContent = participant.name;
-        document.getElementById("selectedActivity").textContent =
-            participant.activity;
+        if (!scheduleId) {
+            resetAndHide([detailsWrapper]);
+            return;
+        }
 
-        selectedParticipantDetails.classList.remove("hidden");
-        searchResultsDiv.classList.add("hidden");
+        const location = selectedOption.dataset.location;
+        const price = selectedOption.dataset.price;
 
-        nextButton.textContent = "NEXT";
-        nextButton.disabled = false;
-        nextButton.type = "button";
-        nextButton.onclick = function () {
-            alert("Pencarian berhasil. Tombol NEXT diaktifkan.");
-        };
+        locationText.textContent = location;
+        priceText.textContent = price;
 
-        participantNameInput.value = participant.name;
-    }
+        // Atur link untuk tombol NEXT
+        nextButton.href = `${nextStepBaseUrl}/${scheduleId}`;
+
+        detailsWrapper.classList.remove("hidden");
+    });
 });
