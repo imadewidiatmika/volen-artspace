@@ -6,6 +6,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\RegistrantController;
 use App\Http\Controllers\ParticipantController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
