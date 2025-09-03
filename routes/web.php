@@ -5,7 +5,7 @@ use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\RegistrantController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ParticipantController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,13 +62,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // Route untuk Manajemen Pendaftar
     Route::get('/registrants', [RegistrantController::class, 'index'])->name('registrants');
-    // PERBAIKAN: Menambahkan route untuk halaman "New Registration"
     Route::get('/new-registrations', [RegistrantController::class, 'showNew'])->name('registrations.new');
+    
+    // PERBAIKAN: Route '/participants' sekarang menjadi resource
+    Route::resource('participants', ParticipantController::class)->except(['create', 'show']);
     
     // Route statis admin lainnya
     Route::view('/detail-attendance', 'admin.scheduleRegistration.detailAttendance')->name('detailAttendance');
-    Route::view('/participants', 'admin.participants.participants')->name('participants');
-
+    
     // Route API untuk filter dinamis di halaman registrants
     Route::prefix('api')->name('api.')->group(function () {
         Route::get('/registrants/dates', [RegistrantController::class, 'getDates'])->name('registrants.getDates');
