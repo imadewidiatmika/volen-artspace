@@ -19,7 +19,7 @@
 
                 {{-- Input untuk name --}}
                 <div class="mb-4 text-start">
-                    <label for="userInput" class="form-label form-label-custom">name :</label>
+                    <label for="userInput" class="form-label form-label-custom">Username :</label>
                     <input type="text" class="form-control" name="name" id="userInput" value="{{ old('name') }}" required autofocus placeholder="Masukkan Username Anda">
                     @error('name')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
