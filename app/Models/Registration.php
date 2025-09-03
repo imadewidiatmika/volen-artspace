@@ -1,26 +1,19 @@
 <?php
-
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Registration extends Model
 {
-       protected $fillable = [
-        'activities',
-        'date',
-        'time',
-        'location',
-        'schedule_id', 
-    ];
+    use HasFactory;
+    protected $fillable = ['participant_id', 'activity_schedule_id', 'prtcp_remark', 'status','receipt_path',];
 
-     protected $casts = [
-        'date' => 'date',
-    ];
+    public function participant() {
+        return $this->belongsTo(Participant::class);
+    }
 
-    // Relationship dengan activity schedule
-    public function activitySchedule()
-    {
-        return $this->belongsTo(ActivitySchedule::class, 'schedule_id');
+    public function schedule() {
+        return $this->belongsTo(ActivitySchedule::class, 'activity_schedule_id');
     }
 }

@@ -14,10 +14,7 @@ public function up(): void
         $table->date('date');
         $table->time('time');
 
-        // INI BAGIAN YANG DIPERBAIKI
-        // 1. Buat kolom dengan tipe data UUID
         $table->uuid('activity_id');
-        // 2. Hubungkan sebagai foreign key ke tabel activities
         $table->foreign('activity_id')->references('id')->on('activities')->onDelete('cascade');
 
         $table->string('location');
@@ -29,7 +26,6 @@ public function up(): void
         $table->text('description')->nullable();
         $table->timestamps();
 
-        // Indexes
         $table->index(['date', 'time']);
         $table->index('status');
     });

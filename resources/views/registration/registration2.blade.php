@@ -25,7 +25,7 @@
             </div>
 
             {{-- Ganti form menjadi POST ke route storeStep2 --}}
-            <form method="POST" action="{{ route('registration.storeStep2') }}">
+            <form method="POST" action="{{ route('registration.storeStep2', $schedule) }}">
                 @csrf
                 <div class="mb-3 text-start">
                     <label for="nameInput" class="form-label form-label-custom">Name :</label>

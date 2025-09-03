@@ -3,30 +3,33 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids; // <-- Gunakan ini
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 class Activity extends Model
 {
-    use HasFactory;
-
-    // Konfigurasi khusus untuk Primary Key UUID
-    public $incrementing = false;
-    protected $keyType = 'string';
+    // Trait HasUuids ini menggantikan semua kode manual Anda untuk UUID
+    use HasFactory, HasUuids;
 
     protected $fillable = [
         'name',
     ];
 
     /**
-     * Boot the model.
-     * Otomatis membuat UUID saat data baru dibuat.
+     * Relasi bahwa satu Activity bisa memiliki banyak jadwal.
      */
-    protected static function booted(): void
+    public function schedules()
     {
-        static::creating(function (Activity $activity) {
-            $activity->id = (string) Str::uuid();
-        });
+        return $this->hasMany(ActivitySchedule::class);
+    }
+
+    /**
+     * FUNGSI INI MEMPERBAIKI ERROR ANDA
+     * Relasi bahwa satu Activity memiliki banyak pendaftaran (melalui jadwal).
+     */
+    public function registrations()
+    {
+        return $this->hasManyThrough(Registration::class, ActivitySchedule::class);
     }
 }

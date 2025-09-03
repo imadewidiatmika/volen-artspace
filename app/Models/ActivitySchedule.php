@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Models\Registration;
 
 class ActivitySchedule extends Model
 {
@@ -34,11 +35,9 @@ class ActivitySchedule extends Model
     ];
 
     // Relationship dengan registrations
-    public function registrations()
-    {
-        return $this->hasMany(Registration::class, 'schedule_id');
-    }
-
+public function registrations() {
+    return $this->hasMany(Registration::class, 'activity_schedule_id');
+}
     // Accessor untuk format tanggal Indonesia
     public function getFormattedDateAttribute()
     {
@@ -104,4 +103,9 @@ class ActivitySchedule extends Model
     {
         return $query->whereDate('date', Carbon::today());
     }
+
+    public function registration()
+{
+    return $this->hasMany(Registration::class, 'activity_schedule_id');
+}
 }

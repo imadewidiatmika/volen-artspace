@@ -4,137 +4,124 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>Detail Attendance</title>
+    <title>Registrants of Activities</title>
     <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler-vendors.min.css" rel="stylesheet"/>
-     <link rel="stylesheet" href="{{ asset('css/tabler.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tabler.css') }}">
   </head>
-
   <body class="theme-dark">
     <div class="page">
       <x-aside />
-      <!-- ✅ KONTEN -->
       <div class="page-wrapper">
         <div class="container-fluid">
+                   {{-- Header dengan Search dan Records Per-Page --}}
           <div class="page-header d-print-none">
-            <div class="row align-items-center">
+            <div class="row g-2 align-items-center">
+              <div class="col">
+                <h2 class="page-title">Registrants of Activities</h2>
+              </div>
               <div class="col-auto ms-auto d-print-none">
-                <div class="d-flex flex-wrap align-items-center">
-                  <div class="input-icon me-3">
-                    <input type="text" class="form-control" placeholder="Search keywords..." aria-label="Search keywords">
-                    <span class="input-icon-addon">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                        <path d="M21 21l-6 -6" />
-                      </svg>
-                    </span>
+                <div class="d-flex">
+                  <div class="me-3">
+                    <div class="input-icon">
+                      <input type="text" id="searchInput" class="form-control" placeholder="Search by name/email...">
+                    </div>
                   </div>
                   <div class="btn-list d-flex align-items-center me-3">
-                    <select class="form-select-sm w-auto me-2" id="recordsPerPage">
-                      <option value="10">10</option>
-                      <option value="15" selected>15</option>
+                    <select class="form-select" id="perPageSelect" style="width: auto;">
+                      <option value="15">15</option>
                       <option value="25">25</option>
                       <option value="50">50</option>
                     </select>
-                    <span class="text-secondary">Records per-page</span>
+                    <span class="ms-2 text-secondary">Records per-page</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+                    <div id="registrants-filter-card" class="card card-body mb-4"
+                data-get-dates-url="{{ route('admin.api.registrants.getDates') }}"
+                data-get-times-url="{{ route('admin.api.registrants.getTimes') }}"
+                data-get-data-url="{{ route('admin.api.registrants.getData') }}">
+            <div class="row g-3">
 
-<!-- ✅ FILTER CARD -->
-<div class="card mb-4">
-  <div class="card-body">
-    <div class="row g-3">
-      <div class="col-md-4 text-dark">
-        <label class="form-label">Activity</label>
-        <select class="form-select bg-white text-dark">
-          <option selected>Clay Painting</option>
-        </select>
-      </div>
-      <div class="col-md-4 text-dark">
-        <label class="form-label">Date</label>
-        <select class="form-select bg-white text-dark">
-          <option selected>Wednesday, 30/06/2025</option>
-        </select>
-      </div>
-      <div class="col-md-4 text-dark">
-        <label class="form-label">Time</label>
-        <select class="form-select bg-white text-dark">
-          <option selected>12.00 WIB</option>
-        </select>
-      </div>
-      <div class="col-md-4">
-        <label class="form-label text-dark">Location</label>
-        <div class="form-control-plaintext ps-1 text-dark">The Patra Exquisite Ubud - Bali</div>
-      </div>
-      <div class="col-md-4">
-        <label class="form-label text-dark">Status</label>
-        <div class="form-control-plaintext ps-1 text-dark">Succeed</div>
-      </div>
-      <div class="col-md-4 d-flex align-items-end">
-        <button class="btn btn-dark w-100">See Attendants</button>
-      </div>
-    </div>
-  </div>
-</div>
+          {{-- Filter Card --}}
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-md-4 text-dark">
+                  <label class="form-label">Activity</label>
+                  <select class="form-select text-dark bg-white" id="activitySelect">
+                    <option value="" selected disabled>Select Activity</option>
+                    @foreach($activities as $activity)
+                      <option value="{{ $activity->id }}">{{ $activity->name }}</option>
+                    @endforeach
+                  </select>
+                </div>
+                <div class="col-md-4 text-dark">
+                  <label class="form-label">Date</label>
+                  <select class="form-select text-dark bg-white" id="dateSelect" disabled></select>
+                </div>
+                <div class="col-md-4 text-dark">
+                  <label class="form-label">Time</label>
+                  <select class="form-select text-dark bg-white" id="timeSelect" disabled></select>
+                </div>
+                <div class="col-md-4 text-dark">
+                  <label class="form-label">Location</label>
+                  <div id="locationText" class="form-control-plaintext ps-1 text-dark">-</div>
+                </div>
+                <div class="col-md-4 text-dark">
+                  <label class="form-label">Status</label>
+                  <div id="statusText" class="form-control-plaintext ps-1 text-dark">-</div>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                  <button id="seeAttendantsButton" class="btn btn-dark w-100" disabled>See Attendants</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {{-- Tabel Pendaftar --}}
           <div class="page-body">
             <div class="card">
               <div class="table-responsive">
-<table class="flat-table table">
-  <thead>
-    <tr>
-      <th>Participant ID</th>
-      <th>Name</th>
-      <th>Ph.</th>
-      <th>Email</th>
-      <th>Country</th>
-      <th>Prtcp. Remark</th>
-      <th>Receipt</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>6AA34370-AD2A-4DF2-BF9E-4CFD255630B6</td>
-      <td>Emily Putri Diani Novita Dewi</td>
-      <td>0895341115908</td>
-      <td>emilysimilikiti@gmail.com</td>
-      <td>Indonesia</td>
-      <td class="text-uppercase">FIRST-TIMER</td>
-      <td>
-        <a href="#" onclick="showEvidence('/images/evidence/receipt1.jpg')" data-bs-toggle="modal" data-bs-target="#evidenceModal">
-          <div style="width: 45px; height: 65px; overflow: hidden; border-radius: 4px; cursor: pointer; background-color: #000;">
-            <img src="/images/evidence/receipt1.jpg" alt="Receipt" class="img-fluid w-100 h-100 object-fit-cover">
-          </div>
-        </a>
-      </td>
-      <td><a href="#" class="text-info fw-bold">LISTED</a></td>
-    </tr>
-  </tbody>
-</table>
-
+                <table class="flat-table table">
+                  <thead>
+                    <tr>
+                      <th>Participant ID</th><th>Name</th><th>Ph.</th><th>Email</th><th>Country</th><th>Prtcp. Remark</th><th>Receipt</th><th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="registrants-table-body">
+                    <tr><td colspan="8" class="text-center text-muted">Please select a schedule to see attendants.</td></tr>
+                  </tbody>
+                </table>
               </div>
-
-              <!-- ✅ FOOTER PAGINATION -->
               <div class="card-footer d-flex align-items-center">
-                <p class="m-0 text-secondary">Showing 1 to 15 of 15 entries</p>
-                <ul class="pagination m-0 ms-auto">
-                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">4</a></li>
-                  <li class="page-item"><a class="page-link" href="#">›</a></li>
-                </ul>
+                <p id="pagination-info" class="m-0 text-secondary">Showing 0 entries</p>
+                <div id="pagination-links" class="ms-auto"></div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    {{-- Modal untuk melihat bukti transfer --}}
+    <div class="modal fade" id="evidenceModal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Transfer Receipt</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body text-center">
+            <img id="modalEvidenceImage" src="" alt="Receipt" class="img-fluid">
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="{{ asset('js/registrant.js') }}"></script>
   </body>
 </html>

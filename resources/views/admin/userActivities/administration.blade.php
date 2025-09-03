@@ -30,7 +30,7 @@
                     <input type="text" name="search" class="form-control" placeholder="Search keywords..." value="{{ request('search') }}">
                   </div>
                   <div class="btn-list d-flex align-items-center me-3">
-                    <select class="form-select-sm w-auto me-2" name="per_page" onchange="this.form.submit()">
+                    <select class="form-select" style="width: auto;" name="per_page" onchange="this.form.submit()">
                         <option value="10" @if(request('per_page') == 10) selected @endif>10</option>
                         <option value="15" @if(request('per_page', 15) == 15) selected @endif>15</option>
                         <option value="25" @if(request('per_page') == 25) selected @endif>25</option>
@@ -38,7 +38,6 @@
                     </select>
                     <span class="text-secondary">Records per-page</span>
                   </div>
-                  <button type="submit" class="btn btn-outline-primary">Search</button>
                 </form>
               </div>
             </div>
