@@ -20,27 +20,19 @@
             <div class="row align-items-center">
 
               <div class="col-auto ms-auto d-print-none">
-                <div class="d-flex flex-wrap align-items-center">
+                <form method="GET" action="{{ route('admin.registrations.new') }}" class="d-flex">
                   <div class="input-icon me-3">
-                    <input type="text" class="form-control" placeholder="Search keywords..." aria-label="Search keywords">
-                    <span class="input-icon-addon">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                        <path d="M21 21l-6 -6" />
-                      </svg>
-                    </span>
+                    <input type="text" name="search" class="form-control" placeholder="Search..." value="{{ request('search') }}">
                   </div>
-                  <div class="btn-list d-flex align-items-center me-3">
-                    <select class="form-select-sm w-auto me-2" id="recordsPerPage">
-                      <option value="10">10</option>
-                      <option value="15" selected>15</option>
-                      <option value="25">25</option>
-                      <option value="50">50</option>
+                  <div class="d-flex align-items-center">
+                    <select class="form-select" name="per_page" onchange="this.form.submit()" style="width: auto;">
+                      <option value="15" @if(request('per_page', 15) == 15) selected @endif>15</option>
+                      <option value="25" @if(request('per_page') == 25) selected @endif>25</option>
+                      <option value="50" @if(request('per_page') == 50) selected @endif>50</option>
                     </select>
-                    <span class="text-secondary">Records per-page</span>
+                    <span class="ms-2 text-secondary">records per page</span>
                   </div>
-                </div>
+                </form>
               </div>
             </div>
           </div>
@@ -65,42 +57,63 @@
                       <th></th>
                     </tr>
                   </thead>
-                  <tbody>
+ <tbody>
+                    @forelse ($registrations as $reg)
                     <tr>
-                      <td>Megawati</td>
-                      <td>0861231</td>
-                      <td>MegawatiP@gmail.com</td>
-                      <td>Saturday,02/07/2025</td>
-                      <td>10.00 WITA</td>
-                      <td>Clay Poettery Painting Basic</td>
-                      <td>The Patra Exquisite - Ubud, Bali</td>
-                      <td class="fst-italic">550,000</td>
-                       <td>
-                        <a href="#" onclick="showEvidence('/images/evidence/nota1.jpg')" data-bs-toggle="modal" data-bs-target="#evidenceModal">
-                          <div style="width: 80px; height: 80px; overflow: hidden; border-radius: 4px; cursor: pointer;">
-                            <img src="/images/evidence/nota1.jpg" alt="Evidence" class="img-fluid w-100 h-100 object-fit-cover">
-                          </div>
-                        </a>
-                      </td>
-                      <td><a href="#" class="text-info fw-bold">LISTED</a></td>
                       <td>
+                        <div>{{ $reg->participant->name }}</div>
+                      </td>
+                      <td>
+                        <div>{{ $reg->participant->phone }}</div>
+                      </td>
+                      <td>
+                        <div class="text-muted"><a href="mailto:{{ $reg->participant->email }}">{{ $reg->participant->email }}</a></div>
+                      </td>
+                      <td>
+                        <div class="text-muted">{{ $reg->schedule->date->format('l, d M Y') }}</div>
+                      </td>
+                      <td>
+                        {{ \Carbon\Carbon::parse($reg->schedule->time)->format('H:i') }}
+                      </td>
+                      <td>
+                        <div><strong>{{ $reg->schedule->activity->name }}</strong></div>
+                      </td>
+                      <td>
+                        <div class="text-muted">{{ $reg->schedule->location }}</div>
+                      </td>
+                      <td class="fst-italic">Rp{{ number_format($reg->schedule->price, 0, ',', '.') }}</td>
+                       <td>
+                        @if ($reg->receipt_path)
+                          <a href="#" onclick="showEvidence('{{ asset('storage/' . $reg->receipt_path) }}')" data-bs-toggle="modal" data-bs-target="#evidenceModal">
+                            <div class="receipt-thumbnail">
+                              <img src="{{ asset('storage/' . $reg->receipt_path) }}" alt="Receipt">
+                            </div>
+                          </a>
+                        @else
+                          <span class="text-muted">N/A</span>
+                        @endif
+                      </td>
+                      <td>
+                        <span class="badge bg-{{ $reg->status === 'LISTED' ? 'info' : 'warning' }}-lt">{{ str_replace('_', ' ', $reg->status) }}</span>
+                      </td>
+                      <td>
+                        {{-- Logika untuk tombol bisa ditambahkan di sini --}}
                         <button class="btn btn-secondary btn-sm" disabled>Send Ticket</button>
                       </td>
                     </tr>
+                    @empty
+                    <tr>
+                      <td colspan="7" class="text-center text-muted py-4">No new registrations found.</td>
+                    </tr>
+                    @endforelse
                   </tbody>
                 </table>
               </div>
 
               <!-- ✅ FOOTER PAGINATION -->
-              <div class="card-footer d-flex align-items-center">
-                <p class="m-0 text-secondary">Showing 1 to 15 of 15 entries</p>
-                <ul class="pagination m-0 ms-auto">
-                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">4</a></li>
-                  <li class="page-item"><a class="page-link" href="#">›</a></li>
-                </ul>
+<div class="card-footer d-flex align-items-center">
+                <p class="m-0 text-secondary">Showing <span>{{ $registrations->firstItem() }}</span> to <span>{{ $registrations->lastItem() }}</span> of <span>{{ $registrations->total() }}</span> entries</p>
+                {{ $registrations->links() }}
               </div>
             </div>
           </div>
@@ -108,23 +121,20 @@
       </div>
     </div>
 
-     <div class="modal fade" id="evidenceModal" tabindex="-1" aria-labelledby="evidenceModalLabel" aria-hidden="true">
+
+               <div class="modal modal-blur fade" id="evidenceModal" tabindex="-1">
       <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content text-light">
-          <div class="modal-header">
-            <h1 class="modal-title" id="evidenceModalLabel">Evidence Preview</h1>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body text-center">
-            <img id="modalEvidenceImage" src="" alt="Evidence Full" class="img-fluid rounded">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-            <a id="downloadEvidenceBtn" href="#" download class="btn btn-success">Download Evidence</a>
-          </div>
+        <div class="modal-content">
+          <div class="modal-header"><h5 class="modal-title">Evidence Preview</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+          <div class="modal-body text-center p-2"><img id="modalEvidenceImage" src="" alt="Evidence Full" class="img-fluid rounded"></div>
         </div>
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
+            <script>
+      function showEvidence(src) {
+        document.getElementById('modalEvidenceImage').src = src;
+      }
+    </script>
   </body>
 </html>

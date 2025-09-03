@@ -75,7 +75,7 @@
                   <div id="statusText" class="form-control-plaintext ps-1 text-dark">-</div>
                 </div>
                 <div class="col-md-4 d-flex align-items-end">
-                  <button id="seeAttendantsButton" class="btn btn-dark w-100" disabled>See Attendants</button>
+                  <button id="seeAttendantsButton" class="btn btn-dark w-100" disabled>See Participans</button>
                 </div>
               </div>
             </div>

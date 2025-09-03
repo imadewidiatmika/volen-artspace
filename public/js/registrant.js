@@ -130,17 +130,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const receiptHtml = reg.receipt_url
                 ? `<a href="#" onclick="showEvidence('${reg.receipt_url}')" data-bs-toggle="modal" data-bs-target="#evidenceModal"><div class="receipt-thumbnail"><img src="${reg.receipt_url}" alt="Receipt"></div></a>`
                 : '<span class="text-muted">N/A</span>';
-            let statusBadge;
-            if (reg.status === "PENDING_CONFIRMATION") {
-                statusBadge = `<span class="badge bg-warning-lt">${reg.status.replace(
-                    "_",
-                    " "
-                )}</span>`;
-            } else if (reg.status === "LISTED") {
-                statusBadge = `<span class="badge bg-info-lt">${reg.status}</span>`;
-            } else {
-                statusBadge = `<span class="badge bg-secondary-lt">${reg.status}</span>`;
-            }
+
+            const statusBadge = `<span class="badge bg-info-lt">${reg.status}</span>`;
+
             const row = `
                 <tr>
                     <td><span class="text-muted">${reg.participant_id

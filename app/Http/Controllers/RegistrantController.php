@@ -29,6 +29,32 @@ class RegistrantController extends Controller
         ]));
     }
 
+     public function showNew(Request $request)
+    {
+        $search = $request->input('search');
+        $perPage = $request->input('per_page', 15);
+
+        // Ambil data registrasi dengan relasi ke partisipan dan jadwal (termasuk aktivitas)
+        $query = Registration::with(['participant', 'schedule.activity'])
+                    ->latest(); // Urutkan dari yang paling baru
+
+        // Logika pencarian
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->whereHas('participant', function ($subq) use ($search) {
+                    $subq->where('name', 'like', "%{$search}%")
+                         ->orWhere('email', 'like', "%{$search}%");
+                })->orWhereHas('schedule.activity', function ($subq) use ($search) {
+                    $subq->where('name', 'like', "%{$search}%");
+                });
+            });
+        }
+
+        $registrations = $query->paginate($perPage)->withQueryString();
+
+        return view('admin.scheduleRegistration.Registration', compact('registrations'));
+    }
+
     public function getTimes(Request $request): JsonResponse
     {
         $validated = $request->validate(['activity_id' => 'required|uuid|exists:activities,id', 'date' => 'required|date']);
