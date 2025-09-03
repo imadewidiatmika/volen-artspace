@@ -31,6 +31,13 @@
       }
     </style>
   </head>
+      <script>
+        // Periksa apakah ada pesan 'success' di sesi
+        @if(session('success'))
+            // Jika ada, tampilkan dialog
+            alert("{{ session('success') }}");
+        @endif
+    </script>
 
   <body class="theme-dark">
     <div class="page">

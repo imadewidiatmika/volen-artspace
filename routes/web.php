@@ -5,6 +5,7 @@ use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\RegistrantController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,7 +26,9 @@ Route::view('/article', 'layouts.article')->name('article');
 Route::view('/done', 'registration.done')->name('done');
 
 //== HALAMAN LOGIN & SCAN ==//
-Route::view('/login', 'login.login')->name('login');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::view('/choose', 'login.choose');
 Route::view('/activity', 'login.activity');
 Route::view('/scan', 'login.scan');

@@ -12,27 +12,32 @@
         <h1 class="volen-artspace-title text-center mb-2">VOLEN ARTSPACE</h1>
         <p class="registration-system-text text-center mb-5">LOGIN</p>
 
-        <div class="container-custom"> {{-- Laravel form: method POST, action ke route 'registration.step2' --}}
-            <form >
-                @csrf {{-- CSRF token for Laravel security --}}
+        <div class="container-custom">
+            {{-- Formulir login yang menargetkan rute login.authenticate --}}
+            <form method="POST" action="{{ route('login.authenticate') }}">
+                @csrf
+
+                {{-- Input untuk name --}}
                 <div class="mb-4 text-start">
-                    <label for="userInput" class="form-label form-label-custom">User :</label>
-                    <input type="text" class="form-control" name="user" placeholder="Open Registration Activities">
-                    <div class="invalid-feedback">
-                        Username is required.
-                    </div>
+                    <label for="userInput" class="form-label form-label-custom">name :</label>
+                    <input type="text" class="form-control" name="name" id="userInput" value="{{ old('name') }}" required autofocus placeholder="Masukkan Username Anda">
+                    @error('name')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
                 </div>
 
+                {{-- Input untuk password --}}
                 <div class="mb-4 text-start">
                     <label for="passInput" class="form-label form-label-custom">Password :</label>
-                    <input type="password" class="form-control" name="password" placeholder="Open Registration Activities">
-                    <div class="invalid-feedback">
-                        Password is required.
-                    </div>
+                    <input type="password" class="form-control" name="password" id="passInput" required placeholder="Masukkan Password Anda">
+                    @error('password')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
                 </div>
-                 <div class="d-grid gap-2">
-                         <a href="" class="btn btn-dark btn-lg ">LOGIN</a>
-                 </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-dark btn-lg">LOGIN</button>
+                </div>
             </form>
         </div>
     </div>
