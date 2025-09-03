@@ -13,7 +13,7 @@ class Participant extends Model
     // GUNAKAN TRAIT HasUuids DI SINI
     use HasFactory, HasUuids;
 
-    protected $fillable = ['name', 'email', 'phone', 'country'];
+    protected $fillable = ['name', 'email', 'phone', 'country', 'address', 'province'];
 
     public function registrations()
     {

@@ -33,7 +33,6 @@
           </div>
         </li>
 
-        {{-- PERBAIKAN: Menambahkan 'admin.registrations.new' ke kondisi routeIs --}}
         <li class="nav-item dropdown {{ request()->routeIs('admin.activity-schedules.*', 'admin.registrations.new', 'admin.detailAttendance', 'admin.registrants') ? 'active show' : '' }}">
           <a class="nav-link dropdown-toggle" href="#navbar-schedule" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="{{ request()->routeIs('admin.activity-schedules.*', 'admin.registrations.new', 'admin.detailAttendance', 'admin.registrants') ? 'true' : 'false' }}">
             <span class="nav-link-title">Schedule & Registration</span>
@@ -43,10 +42,12 @@
               <span class="nav-link-icon d-md-none d-lg-inline-block"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-time"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M18 16.5v1.5l.5 .5" /></svg></span>
               Activity Scheduling
             </a>
-            {{-- PERBAIKAN: Mengganti route ke halaman 'New Registration' --}}
             <a class="dropdown-item {{ request()->routeIs('admin.registrations.new') ? 'active' : '' }}" href="{{ route('admin.registrations.new') }}">
               <span class="nav-link-icon d-md-none d-lg-inline-block"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M16 19h6" /><path d="M19 16v6" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4" /></svg></span>
-              New Registration <span class="badge bg-green-lt ms-auto">NEW</span>
+              New Registration 
+              @if(isset($newRegistrationCount) && $newRegistrationCount > 0)
+                <span class="badge bg-green-lt ms-auto">{{ $newRegistrationCount }}</span>
+              @endif
             </a>
             <a class="dropdown-item {{ request()->routeIs('admin.registrants') ? 'active' : '' }}" href="{{ route('admin.registrants') }}">
               <span class="nav-link-icon d-md-none d-lg-inline-block"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-users"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M3 21v-2a4 4 0 0 1 4 -4h1a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg></span>
@@ -59,12 +60,14 @@
           </div>
         </li>
 
-        <li class="nav-item dropdown {{ request()->routeIs('admin.participants') ? 'active show' : '' }}">
-          <a class="nav-link dropdown-toggle" href="#navbar-participants" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="{{ request()->routeIs('admin.participants') ? 'true' : 'false' }}">
+        {{-- PERBAIKAN: Menggunakan `admin.participants.*` untuk routeIs agar menu tetap aktif --}}
+        <li class="nav-item dropdown {{ request()->routeIs('admin.participants.*') ? 'active show' : '' }}">
+          <a class="nav-link dropdown-toggle" href="#navbar-participants" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="{{ request()->routeIs('admin.participants.*') ? 'true' : 'false' }}">
             <span class="nav-link-title">Participants</span>
           </a>
-          <div class="dropdown-menu {{ request()->routeIs('admin.participants') ? 'show' : '' }}">
-            <a class="dropdown-item {{ request()->routeIs('admin.participants') ? 'active' : '' }}" href="{{ route('admin.participants') }}">
+          <div class="dropdown-menu {{ request()->routeIs('admin.participants.*') ? 'show' : '' }}">
+            {{-- PERBAIKAN: Menggunakan `admin.participants.index` untuk nama route --}}
+            <a class="dropdown-item {{ request()->routeIs('admin.participants.index') ? 'active' : '' }}" href="{{ route('admin.participants.index') }}">
               <span class="nav-link-icon d-md-none d-lg-inline-block"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-users-group"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" /><path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M17 10h2a2 2 0 0 1 2 2v1" /><path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M3 13v-1a2 2 0 0 1 2 -2h2" /></svg></span>
               Participants Database
             </a>
